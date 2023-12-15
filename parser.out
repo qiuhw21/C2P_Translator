@@ -1,0 +1,1613 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AND
+    BREAK
+    CHAR_LITERAL
+    COMMENT_MULTI
+    COMMENT_SINGLE
+    CONTINUE
+    DEC
+    EQ
+    FLOAT_LITERAL
+    GT
+    GTE
+    INC
+    LBRACKET
+    LT
+    LTE
+    MOD
+    NEQ
+    NOT
+    OR
+    RBRACKET
+    STRING_LITERAL
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> declaration_list
+Rule 2     declaration_list -> declaration_list declaration
+Rule 3     declaration_list -> declaration
+Rule 4     declaration -> var_declaration
+Rule 5     declaration -> function_declaration
+Rule 6     var_declaration -> type_specifier IDENTIFIER SEMICOLON
+Rule 7     var_declaration -> type_specifier IDENTIFIER ASSIGN expression SEMICOLON
+Rule 8     type_specifier -> INT
+Rule 9     type_specifier -> FLOAT
+Rule 10    type_specifier -> CHAR
+Rule 11    type_specifier -> VOID
+Rule 12    function_declaration -> type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement
+Rule 13    param_list -> param_list COMMA param
+Rule 14    param_list -> param
+Rule 15    param_list -> empty
+Rule 16    param -> type_specifier IDENTIFIER
+Rule 17    empty -> <empty>
+Rule 18    compound_statement -> LBRACE statement_list RBRACE
+Rule 19    statement_list -> statement_list statement
+Rule 20    statement_list -> statement
+Rule 21    statement -> expression_statement
+Rule 22    statement -> compound_statement
+Rule 23    statement -> selection_statement
+Rule 24    statement -> iteration_statement
+Rule 25    statement -> return_statement
+Rule 26    expression_statement -> expression SEMICOLON
+Rule 27    expression -> assignment_expression
+Rule 28    expression -> binary_expression
+Rule 29    expression -> term
+Rule 30    assignment_expression -> IDENTIFIER ASSIGN expression
+Rule 31    binary_expression -> expression PLUS expression
+Rule 32    binary_expression -> expression MINUS expression
+Rule 33    binary_expression -> expression TIMES expression
+Rule 34    binary_expression -> expression DIVIDE expression
+Rule 35    term -> IDENTIFIER
+Rule 36    term -> INT_LITERAL
+Rule 37    term -> LPAREN expression RPAREN
+Rule 38    selection_statement -> IF LPAREN expression RPAREN statement
+Rule 39    selection_statement -> IF LPAREN expression RPAREN statement ELSE statement
+Rule 40    iteration_statement -> WHILE LPAREN expression RPAREN statement
+Rule 41    iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement
+Rule 42    return_statement -> RETURN expression SEMICOLON
+
+Terminals, with rules where they appear
+
+AND                  : 
+ASSIGN               : 7 30
+BREAK                : 
+CHAR                 : 10
+CHAR_LITERAL         : 
+COMMA                : 13
+COMMENT_MULTI        : 
+COMMENT_SINGLE       : 
+CONTINUE             : 
+DEC                  : 
+DIVIDE               : 34
+ELSE                 : 39
+EQ                   : 
+FLOAT                : 9
+FLOAT_LITERAL        : 
+FOR                  : 41
+GT                   : 
+GTE                  : 
+IDENTIFIER           : 6 7 12 16 30 35
+IF                   : 38 39
+INC                  : 
+INT                  : 8
+INT_LITERAL          : 36
+LBRACE               : 18
+LBRACKET             : 
+LPAREN               : 12 37 38 39 40 41
+LT                   : 
+LTE                  : 
+MINUS                : 32
+MOD                  : 
+NEQ                  : 
+NOT                  : 
+OR                   : 
+PLUS                 : 31
+RBRACE               : 18
+RBRACKET             : 
+RETURN               : 42
+RPAREN               : 12 37 38 39 40 41
+SEMICOLON            : 6 7 26 42
+STRING_LITERAL       : 
+TIMES                : 33
+VOID                 : 11
+WHILE                : 40
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment_expression : 27
+binary_expression    : 28
+compound_statement   : 12 22
+declaration          : 2 3
+declaration_list     : 1 2
+empty                : 15
+expression           : 7 26 30 31 31 32 32 33 33 34 34 37 38 39 40 41 42
+expression_statement : 21 41 41
+function_declaration : 5
+iteration_statement  : 24
+param                : 13 14
+param_list           : 12 13
+program              : 0
+return_statement     : 25
+selection_statement  : 23
+statement            : 19 20 38 39 39 40 41
+statement_list       : 18 19
+term                 : 29
+type_specifier       : 6 7 12 16
+var_declaration      : 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . declaration_list
+    (2) declaration_list -> . declaration_list declaration
+    (3) declaration_list -> . declaration
+    (4) declaration -> . var_declaration
+    (5) declaration -> . function_declaration
+    (6) var_declaration -> . type_specifier IDENTIFIER SEMICOLON
+    (7) var_declaration -> . type_specifier IDENTIFIER ASSIGN expression SEMICOLON
+    (12) function_declaration -> . type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement
+    (8) type_specifier -> . INT
+    (9) type_specifier -> . FLOAT
+    (10) type_specifier -> . CHAR
+    (11) type_specifier -> . VOID
+
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    CHAR            shift and go to state 9
+    VOID            shift and go to state 10
+
+    program                        shift and go to state 1
+    declaration_list               shift and go to state 2
+    declaration                    shift and go to state 3
+    var_declaration                shift and go to state 4
+    function_declaration           shift and go to state 5
+    type_specifier                 shift and go to state 6
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> declaration_list .
+    (2) declaration_list -> declaration_list . declaration
+    (4) declaration -> . var_declaration
+    (5) declaration -> . function_declaration
+    (6) var_declaration -> . type_specifier IDENTIFIER SEMICOLON
+    (7) var_declaration -> . type_specifier IDENTIFIER ASSIGN expression SEMICOLON
+    (12) function_declaration -> . type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement
+    (8) type_specifier -> . INT
+    (9) type_specifier -> . FLOAT
+    (10) type_specifier -> . CHAR
+    (11) type_specifier -> . VOID
+
+    $end            reduce using rule 1 (program -> declaration_list .)
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    CHAR            shift and go to state 9
+    VOID            shift and go to state 10
+
+    declaration                    shift and go to state 11
+    var_declaration                shift and go to state 4
+    function_declaration           shift and go to state 5
+    type_specifier                 shift and go to state 6
+
+state 3
+
+    (3) declaration_list -> declaration .
+
+    INT             reduce using rule 3 (declaration_list -> declaration .)
+    FLOAT           reduce using rule 3 (declaration_list -> declaration .)
+    CHAR            reduce using rule 3 (declaration_list -> declaration .)
+    VOID            reduce using rule 3 (declaration_list -> declaration .)
+    $end            reduce using rule 3 (declaration_list -> declaration .)
+
+
+state 4
+
+    (4) declaration -> var_declaration .
+
+    INT             reduce using rule 4 (declaration -> var_declaration .)
+    FLOAT           reduce using rule 4 (declaration -> var_declaration .)
+    CHAR            reduce using rule 4 (declaration -> var_declaration .)
+    VOID            reduce using rule 4 (declaration -> var_declaration .)
+    $end            reduce using rule 4 (declaration -> var_declaration .)
+
+
+state 5
+
+    (5) declaration -> function_declaration .
+
+    INT             reduce using rule 5 (declaration -> function_declaration .)
+    FLOAT           reduce using rule 5 (declaration -> function_declaration .)
+    CHAR            reduce using rule 5 (declaration -> function_declaration .)
+    VOID            reduce using rule 5 (declaration -> function_declaration .)
+    $end            reduce using rule 5 (declaration -> function_declaration .)
+
+
+state 6
+
+    (6) var_declaration -> type_specifier . IDENTIFIER SEMICOLON
+    (7) var_declaration -> type_specifier . IDENTIFIER ASSIGN expression SEMICOLON
+    (12) function_declaration -> type_specifier . IDENTIFIER LPAREN param_list RPAREN compound_statement
+
+    IDENTIFIER      shift and go to state 12
+
+
+state 7
+
+    (8) type_specifier -> INT .
+
+    IDENTIFIER      reduce using rule 8 (type_specifier -> INT .)
+
+
+state 8
+
+    (9) type_specifier -> FLOAT .
+
+    IDENTIFIER      reduce using rule 9 (type_specifier -> FLOAT .)
+
+
+state 9
+
+    (10) type_specifier -> CHAR .
+
+    IDENTIFIER      reduce using rule 10 (type_specifier -> CHAR .)
+
+
+state 10
+
+    (11) type_specifier -> VOID .
+
+    IDENTIFIER      reduce using rule 11 (type_specifier -> VOID .)
+
+
+state 11
+
+    (2) declaration_list -> declaration_list declaration .
+
+    INT             reduce using rule 2 (declaration_list -> declaration_list declaration .)
+    FLOAT           reduce using rule 2 (declaration_list -> declaration_list declaration .)
+    CHAR            reduce using rule 2 (declaration_list -> declaration_list declaration .)
+    VOID            reduce using rule 2 (declaration_list -> declaration_list declaration .)
+    $end            reduce using rule 2 (declaration_list -> declaration_list declaration .)
+
+
+state 12
+
+    (6) var_declaration -> type_specifier IDENTIFIER . SEMICOLON
+    (7) var_declaration -> type_specifier IDENTIFIER . ASSIGN expression SEMICOLON
+    (12) function_declaration -> type_specifier IDENTIFIER . LPAREN param_list RPAREN compound_statement
+
+    SEMICOLON       shift and go to state 13
+    ASSIGN          shift and go to state 14
+    LPAREN          shift and go to state 15
+
+
+state 13
+
+    (6) var_declaration -> type_specifier IDENTIFIER SEMICOLON .
+
+    INT             reduce using rule 6 (var_declaration -> type_specifier IDENTIFIER SEMICOLON .)
+    FLOAT           reduce using rule 6 (var_declaration -> type_specifier IDENTIFIER SEMICOLON .)
+    CHAR            reduce using rule 6 (var_declaration -> type_specifier IDENTIFIER SEMICOLON .)
+    VOID            reduce using rule 6 (var_declaration -> type_specifier IDENTIFIER SEMICOLON .)
+    $end            reduce using rule 6 (var_declaration -> type_specifier IDENTIFIER SEMICOLON .)
+
+
+state 14
+
+    (7) var_declaration -> type_specifier IDENTIFIER ASSIGN . expression SEMICOLON
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 17
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 15
+
+    (12) function_declaration -> type_specifier IDENTIFIER LPAREN . param_list RPAREN compound_statement
+    (13) param_list -> . param_list COMMA param
+    (14) param_list -> . param
+    (15) param_list -> . empty
+    (16) param -> . type_specifier IDENTIFIER
+    (17) empty -> .
+    (8) type_specifier -> . INT
+    (9) type_specifier -> . FLOAT
+    (10) type_specifier -> . CHAR
+    (11) type_specifier -> . VOID
+
+    RPAREN          reduce using rule 17 (empty -> .)
+    COMMA           reduce using rule 17 (empty -> .)
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    CHAR            shift and go to state 9
+    VOID            shift and go to state 10
+
+    type_specifier                 shift and go to state 23
+    param_list                     shift and go to state 24
+    param                          shift and go to state 25
+    empty                          shift and go to state 26
+
+state 16
+
+    (30) assignment_expression -> IDENTIFIER . ASSIGN expression
+    (35) term -> IDENTIFIER .
+
+    ASSIGN          shift and go to state 27
+    SEMICOLON       reduce using rule 35 (term -> IDENTIFIER .)
+    PLUS            reduce using rule 35 (term -> IDENTIFIER .)
+    MINUS           reduce using rule 35 (term -> IDENTIFIER .)
+    TIMES           reduce using rule 35 (term -> IDENTIFIER .)
+    DIVIDE          reduce using rule 35 (term -> IDENTIFIER .)
+    RPAREN          reduce using rule 35 (term -> IDENTIFIER .)
+
+
+state 17
+
+    (7) var_declaration -> type_specifier IDENTIFIER ASSIGN expression . SEMICOLON
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 28
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 18
+
+    (27) expression -> assignment_expression .
+
+    SEMICOLON       reduce using rule 27 (expression -> assignment_expression .)
+    PLUS            reduce using rule 27 (expression -> assignment_expression .)
+    MINUS           reduce using rule 27 (expression -> assignment_expression .)
+    TIMES           reduce using rule 27 (expression -> assignment_expression .)
+    DIVIDE          reduce using rule 27 (expression -> assignment_expression .)
+    RPAREN          reduce using rule 27 (expression -> assignment_expression .)
+
+
+state 19
+
+    (28) expression -> binary_expression .
+
+    SEMICOLON       reduce using rule 28 (expression -> binary_expression .)
+    PLUS            reduce using rule 28 (expression -> binary_expression .)
+    MINUS           reduce using rule 28 (expression -> binary_expression .)
+    TIMES           reduce using rule 28 (expression -> binary_expression .)
+    DIVIDE          reduce using rule 28 (expression -> binary_expression .)
+    RPAREN          reduce using rule 28 (expression -> binary_expression .)
+
+
+state 20
+
+    (29) expression -> term .
+
+    SEMICOLON       reduce using rule 29 (expression -> term .)
+    PLUS            reduce using rule 29 (expression -> term .)
+    MINUS           reduce using rule 29 (expression -> term .)
+    TIMES           reduce using rule 29 (expression -> term .)
+    DIVIDE          reduce using rule 29 (expression -> term .)
+    RPAREN          reduce using rule 29 (expression -> term .)
+
+
+state 21
+
+    (36) term -> INT_LITERAL .
+
+    SEMICOLON       reduce using rule 36 (term -> INT_LITERAL .)
+    PLUS            reduce using rule 36 (term -> INT_LITERAL .)
+    MINUS           reduce using rule 36 (term -> INT_LITERAL .)
+    TIMES           reduce using rule 36 (term -> INT_LITERAL .)
+    DIVIDE          reduce using rule 36 (term -> INT_LITERAL .)
+    RPAREN          reduce using rule 36 (term -> INT_LITERAL .)
+
+
+state 22
+
+    (37) term -> LPAREN . expression RPAREN
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 33
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 23
+
+    (16) param -> type_specifier . IDENTIFIER
+
+    IDENTIFIER      shift and go to state 34
+
+
+state 24
+
+    (12) function_declaration -> type_specifier IDENTIFIER LPAREN param_list . RPAREN compound_statement
+    (13) param_list -> param_list . COMMA param
+
+    RPAREN          shift and go to state 35
+    COMMA           shift and go to state 36
+
+
+state 25
+
+    (14) param_list -> param .
+
+    RPAREN          reduce using rule 14 (param_list -> param .)
+    COMMA           reduce using rule 14 (param_list -> param .)
+
+
+state 26
+
+    (15) param_list -> empty .
+
+    RPAREN          reduce using rule 15 (param_list -> empty .)
+    COMMA           reduce using rule 15 (param_list -> empty .)
+
+
+state 27
+
+    (30) assignment_expression -> IDENTIFIER ASSIGN . expression
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 37
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 28
+
+    (7) var_declaration -> type_specifier IDENTIFIER ASSIGN expression SEMICOLON .
+
+    INT             reduce using rule 7 (var_declaration -> type_specifier IDENTIFIER ASSIGN expression SEMICOLON .)
+    FLOAT           reduce using rule 7 (var_declaration -> type_specifier IDENTIFIER ASSIGN expression SEMICOLON .)
+    CHAR            reduce using rule 7 (var_declaration -> type_specifier IDENTIFIER ASSIGN expression SEMICOLON .)
+    VOID            reduce using rule 7 (var_declaration -> type_specifier IDENTIFIER ASSIGN expression SEMICOLON .)
+    $end            reduce using rule 7 (var_declaration -> type_specifier IDENTIFIER ASSIGN expression SEMICOLON .)
+
+
+state 29
+
+    (31) binary_expression -> expression PLUS . expression
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 38
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 30
+
+    (32) binary_expression -> expression MINUS . expression
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 39
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 31
+
+    (33) binary_expression -> expression TIMES . expression
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 40
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 32
+
+    (34) binary_expression -> expression DIVIDE . expression
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 41
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 33
+
+    (37) term -> LPAREN expression . RPAREN
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 42
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 34
+
+    (16) param -> type_specifier IDENTIFIER .
+
+    RPAREN          reduce using rule 16 (param -> type_specifier IDENTIFIER .)
+    COMMA           reduce using rule 16 (param -> type_specifier IDENTIFIER .)
+
+
+state 35
+
+    (12) function_declaration -> type_specifier IDENTIFIER LPAREN param_list RPAREN . compound_statement
+    (18) compound_statement -> . LBRACE statement_list RBRACE
+
+    LBRACE          shift and go to state 44
+
+    compound_statement             shift and go to state 43
+
+state 36
+
+    (13) param_list -> param_list COMMA . param
+    (16) param -> . type_specifier IDENTIFIER
+    (8) type_specifier -> . INT
+    (9) type_specifier -> . FLOAT
+    (10) type_specifier -> . CHAR
+    (11) type_specifier -> . VOID
+
+    INT             shift and go to state 7
+    FLOAT           shift and go to state 8
+    CHAR            shift and go to state 9
+    VOID            shift and go to state 10
+
+    param                          shift and go to state 45
+    type_specifier                 shift and go to state 23
+
+state 37
+
+    (30) assignment_expression -> IDENTIFIER ASSIGN expression .
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 30 (assignment_expression -> IDENTIFIER ASSIGN expression .)
+    RPAREN          reduce using rule 30 (assignment_expression -> IDENTIFIER ASSIGN expression .)
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+  ! PLUS            [ reduce using rule 30 (assignment_expression -> IDENTIFIER ASSIGN expression .) ]
+  ! MINUS           [ reduce using rule 30 (assignment_expression -> IDENTIFIER ASSIGN expression .) ]
+  ! TIMES           [ reduce using rule 30 (assignment_expression -> IDENTIFIER ASSIGN expression .) ]
+  ! DIVIDE          [ reduce using rule 30 (assignment_expression -> IDENTIFIER ASSIGN expression .) ]
+
+
+state 38
+
+    (31) binary_expression -> expression PLUS expression .
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 31 (binary_expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 31 (binary_expression -> expression PLUS expression .)
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+  ! PLUS            [ reduce using rule 31 (binary_expression -> expression PLUS expression .) ]
+  ! MINUS           [ reduce using rule 31 (binary_expression -> expression PLUS expression .) ]
+  ! TIMES           [ reduce using rule 31 (binary_expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 31 (binary_expression -> expression PLUS expression .) ]
+
+
+state 39
+
+    (32) binary_expression -> expression MINUS expression .
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 32 (binary_expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 32 (binary_expression -> expression MINUS expression .)
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+  ! PLUS            [ reduce using rule 32 (binary_expression -> expression MINUS expression .) ]
+  ! MINUS           [ reduce using rule 32 (binary_expression -> expression MINUS expression .) ]
+  ! TIMES           [ reduce using rule 32 (binary_expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 32 (binary_expression -> expression MINUS expression .) ]
+
+
+state 40
+
+    (33) binary_expression -> expression TIMES expression .
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 33 (binary_expression -> expression TIMES expression .)
+    RPAREN          reduce using rule 33 (binary_expression -> expression TIMES expression .)
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+  ! PLUS            [ reduce using rule 33 (binary_expression -> expression TIMES expression .) ]
+  ! MINUS           [ reduce using rule 33 (binary_expression -> expression TIMES expression .) ]
+  ! TIMES           [ reduce using rule 33 (binary_expression -> expression TIMES expression .) ]
+  ! DIVIDE          [ reduce using rule 33 (binary_expression -> expression TIMES expression .) ]
+
+
+state 41
+
+    (34) binary_expression -> expression DIVIDE expression .
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 34 (binary_expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 34 (binary_expression -> expression DIVIDE expression .)
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+  ! PLUS            [ reduce using rule 34 (binary_expression -> expression DIVIDE expression .) ]
+  ! MINUS           [ reduce using rule 34 (binary_expression -> expression DIVIDE expression .) ]
+  ! TIMES           [ reduce using rule 34 (binary_expression -> expression DIVIDE expression .) ]
+  ! DIVIDE          [ reduce using rule 34 (binary_expression -> expression DIVIDE expression .) ]
+
+
+state 42
+
+    (37) term -> LPAREN expression RPAREN .
+
+    SEMICOLON       reduce using rule 37 (term -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 37 (term -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 37 (term -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 37 (term -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 37 (term -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 37 (term -> LPAREN expression RPAREN .)
+
+
+state 43
+
+    (12) function_declaration -> type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement .
+
+    INT             reduce using rule 12 (function_declaration -> type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement .)
+    FLOAT           reduce using rule 12 (function_declaration -> type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement .)
+    CHAR            reduce using rule 12 (function_declaration -> type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement .)
+    VOID            reduce using rule 12 (function_declaration -> type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement .)
+    $end            reduce using rule 12 (function_declaration -> type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement .)
+
+
+state 44
+
+    (18) compound_statement -> LBRACE . statement_list RBRACE
+    (19) statement_list -> . statement_list statement
+    (20) statement_list -> . statement
+    (21) statement -> . expression_statement
+    (22) statement -> . compound_statement
+    (23) statement -> . selection_statement
+    (24) statement -> . iteration_statement
+    (25) statement -> . return_statement
+    (26) expression_statement -> . expression SEMICOLON
+    (18) compound_statement -> . LBRACE statement_list RBRACE
+    (38) selection_statement -> . IF LPAREN expression RPAREN statement
+    (39) selection_statement -> . IF LPAREN expression RPAREN statement ELSE statement
+    (40) iteration_statement -> . WHILE LPAREN expression RPAREN statement
+    (41) iteration_statement -> . FOR LPAREN expression_statement expression_statement expression RPAREN statement
+    (42) return_statement -> . RETURN expression SEMICOLON
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    LBRACE          shift and go to state 44
+    IF              shift and go to state 54
+    WHILE           shift and go to state 55
+    FOR             shift and go to state 56
+    RETURN          shift and go to state 57
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    statement_list                 shift and go to state 46
+    statement                      shift and go to state 47
+    expression_statement           shift and go to state 48
+    compound_statement             shift and go to state 49
+    selection_statement            shift and go to state 50
+    iteration_statement            shift and go to state 51
+    return_statement               shift and go to state 52
+    expression                     shift and go to state 53
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 45
+
+    (13) param_list -> param_list COMMA param .
+
+    RPAREN          reduce using rule 13 (param_list -> param_list COMMA param .)
+    COMMA           reduce using rule 13 (param_list -> param_list COMMA param .)
+
+
+state 46
+
+    (18) compound_statement -> LBRACE statement_list . RBRACE
+    (19) statement_list -> statement_list . statement
+    (21) statement -> . expression_statement
+    (22) statement -> . compound_statement
+    (23) statement -> . selection_statement
+    (24) statement -> . iteration_statement
+    (25) statement -> . return_statement
+    (26) expression_statement -> . expression SEMICOLON
+    (18) compound_statement -> . LBRACE statement_list RBRACE
+    (38) selection_statement -> . IF LPAREN expression RPAREN statement
+    (39) selection_statement -> . IF LPAREN expression RPAREN statement ELSE statement
+    (40) iteration_statement -> . WHILE LPAREN expression RPAREN statement
+    (41) iteration_statement -> . FOR LPAREN expression_statement expression_statement expression RPAREN statement
+    (42) return_statement -> . RETURN expression SEMICOLON
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    RBRACE          shift and go to state 58
+    LBRACE          shift and go to state 44
+    IF              shift and go to state 54
+    WHILE           shift and go to state 55
+    FOR             shift and go to state 56
+    RETURN          shift and go to state 57
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    statement                      shift and go to state 59
+    expression_statement           shift and go to state 48
+    compound_statement             shift and go to state 49
+    selection_statement            shift and go to state 50
+    iteration_statement            shift and go to state 51
+    return_statement               shift and go to state 52
+    expression                     shift and go to state 53
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 47
+
+    (20) statement_list -> statement .
+
+    RBRACE          reduce using rule 20 (statement_list -> statement .)
+    LBRACE          reduce using rule 20 (statement_list -> statement .)
+    IF              reduce using rule 20 (statement_list -> statement .)
+    WHILE           reduce using rule 20 (statement_list -> statement .)
+    FOR             reduce using rule 20 (statement_list -> statement .)
+    RETURN          reduce using rule 20 (statement_list -> statement .)
+    IDENTIFIER      reduce using rule 20 (statement_list -> statement .)
+    INT_LITERAL     reduce using rule 20 (statement_list -> statement .)
+    LPAREN          reduce using rule 20 (statement_list -> statement .)
+
+
+state 48
+
+    (21) statement -> expression_statement .
+
+    RBRACE          reduce using rule 21 (statement -> expression_statement .)
+    LBRACE          reduce using rule 21 (statement -> expression_statement .)
+    IF              reduce using rule 21 (statement -> expression_statement .)
+    WHILE           reduce using rule 21 (statement -> expression_statement .)
+    FOR             reduce using rule 21 (statement -> expression_statement .)
+    RETURN          reduce using rule 21 (statement -> expression_statement .)
+    IDENTIFIER      reduce using rule 21 (statement -> expression_statement .)
+    INT_LITERAL     reduce using rule 21 (statement -> expression_statement .)
+    LPAREN          reduce using rule 21 (statement -> expression_statement .)
+    ELSE            reduce using rule 21 (statement -> expression_statement .)
+
+
+state 49
+
+    (22) statement -> compound_statement .
+
+    RBRACE          reduce using rule 22 (statement -> compound_statement .)
+    LBRACE          reduce using rule 22 (statement -> compound_statement .)
+    IF              reduce using rule 22 (statement -> compound_statement .)
+    WHILE           reduce using rule 22 (statement -> compound_statement .)
+    FOR             reduce using rule 22 (statement -> compound_statement .)
+    RETURN          reduce using rule 22 (statement -> compound_statement .)
+    IDENTIFIER      reduce using rule 22 (statement -> compound_statement .)
+    INT_LITERAL     reduce using rule 22 (statement -> compound_statement .)
+    LPAREN          reduce using rule 22 (statement -> compound_statement .)
+    ELSE            reduce using rule 22 (statement -> compound_statement .)
+
+
+state 50
+
+    (23) statement -> selection_statement .
+
+    RBRACE          reduce using rule 23 (statement -> selection_statement .)
+    LBRACE          reduce using rule 23 (statement -> selection_statement .)
+    IF              reduce using rule 23 (statement -> selection_statement .)
+    WHILE           reduce using rule 23 (statement -> selection_statement .)
+    FOR             reduce using rule 23 (statement -> selection_statement .)
+    RETURN          reduce using rule 23 (statement -> selection_statement .)
+    IDENTIFIER      reduce using rule 23 (statement -> selection_statement .)
+    INT_LITERAL     reduce using rule 23 (statement -> selection_statement .)
+    LPAREN          reduce using rule 23 (statement -> selection_statement .)
+    ELSE            reduce using rule 23 (statement -> selection_statement .)
+
+
+state 51
+
+    (24) statement -> iteration_statement .
+
+    RBRACE          reduce using rule 24 (statement -> iteration_statement .)
+    LBRACE          reduce using rule 24 (statement -> iteration_statement .)
+    IF              reduce using rule 24 (statement -> iteration_statement .)
+    WHILE           reduce using rule 24 (statement -> iteration_statement .)
+    FOR             reduce using rule 24 (statement -> iteration_statement .)
+    RETURN          reduce using rule 24 (statement -> iteration_statement .)
+    IDENTIFIER      reduce using rule 24 (statement -> iteration_statement .)
+    INT_LITERAL     reduce using rule 24 (statement -> iteration_statement .)
+    LPAREN          reduce using rule 24 (statement -> iteration_statement .)
+    ELSE            reduce using rule 24 (statement -> iteration_statement .)
+
+
+state 52
+
+    (25) statement -> return_statement .
+
+    RBRACE          reduce using rule 25 (statement -> return_statement .)
+    LBRACE          reduce using rule 25 (statement -> return_statement .)
+    IF              reduce using rule 25 (statement -> return_statement .)
+    WHILE           reduce using rule 25 (statement -> return_statement .)
+    FOR             reduce using rule 25 (statement -> return_statement .)
+    RETURN          reduce using rule 25 (statement -> return_statement .)
+    IDENTIFIER      reduce using rule 25 (statement -> return_statement .)
+    INT_LITERAL     reduce using rule 25 (statement -> return_statement .)
+    LPAREN          reduce using rule 25 (statement -> return_statement .)
+    ELSE            reduce using rule 25 (statement -> return_statement .)
+
+
+state 53
+
+    (26) expression_statement -> expression . SEMICOLON
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 60
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 54
+
+    (38) selection_statement -> IF . LPAREN expression RPAREN statement
+    (39) selection_statement -> IF . LPAREN expression RPAREN statement ELSE statement
+
+    LPAREN          shift and go to state 61
+
+
+state 55
+
+    (40) iteration_statement -> WHILE . LPAREN expression RPAREN statement
+
+    LPAREN          shift and go to state 62
+
+
+state 56
+
+    (41) iteration_statement -> FOR . LPAREN expression_statement expression_statement expression RPAREN statement
+
+    LPAREN          shift and go to state 63
+
+
+state 57
+
+    (42) return_statement -> RETURN . expression SEMICOLON
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 64
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 58
+
+    (18) compound_statement -> LBRACE statement_list RBRACE .
+
+    INT             reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    FLOAT           reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    CHAR            reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    VOID            reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    $end            reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    RBRACE          reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    LBRACE          reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    IF              reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    WHILE           reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    FOR             reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    RETURN          reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    IDENTIFIER      reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    INT_LITERAL     reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    LPAREN          reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+    ELSE            reduce using rule 18 (compound_statement -> LBRACE statement_list RBRACE .)
+
+
+state 59
+
+    (19) statement_list -> statement_list statement .
+
+    RBRACE          reduce using rule 19 (statement_list -> statement_list statement .)
+    LBRACE          reduce using rule 19 (statement_list -> statement_list statement .)
+    IF              reduce using rule 19 (statement_list -> statement_list statement .)
+    WHILE           reduce using rule 19 (statement_list -> statement_list statement .)
+    FOR             reduce using rule 19 (statement_list -> statement_list statement .)
+    RETURN          reduce using rule 19 (statement_list -> statement_list statement .)
+    IDENTIFIER      reduce using rule 19 (statement_list -> statement_list statement .)
+    INT_LITERAL     reduce using rule 19 (statement_list -> statement_list statement .)
+    LPAREN          reduce using rule 19 (statement_list -> statement_list statement .)
+
+
+state 60
+
+    (26) expression_statement -> expression SEMICOLON .
+
+    RBRACE          reduce using rule 26 (expression_statement -> expression SEMICOLON .)
+    LBRACE          reduce using rule 26 (expression_statement -> expression SEMICOLON .)
+    IF              reduce using rule 26 (expression_statement -> expression SEMICOLON .)
+    WHILE           reduce using rule 26 (expression_statement -> expression SEMICOLON .)
+    FOR             reduce using rule 26 (expression_statement -> expression SEMICOLON .)
+    RETURN          reduce using rule 26 (expression_statement -> expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 26 (expression_statement -> expression SEMICOLON .)
+    INT_LITERAL     reduce using rule 26 (expression_statement -> expression SEMICOLON .)
+    LPAREN          reduce using rule 26 (expression_statement -> expression SEMICOLON .)
+    ELSE            reduce using rule 26 (expression_statement -> expression SEMICOLON .)
+
+
+state 61
+
+    (38) selection_statement -> IF LPAREN . expression RPAREN statement
+    (39) selection_statement -> IF LPAREN . expression RPAREN statement ELSE statement
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 65
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 62
+
+    (40) iteration_statement -> WHILE LPAREN . expression RPAREN statement
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 66
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 63
+
+    (41) iteration_statement -> FOR LPAREN . expression_statement expression_statement expression RPAREN statement
+    (26) expression_statement -> . expression SEMICOLON
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression_statement           shift and go to state 67
+    expression                     shift and go to state 53
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 64
+
+    (42) return_statement -> RETURN expression . SEMICOLON
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 68
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 65
+
+    (38) selection_statement -> IF LPAREN expression . RPAREN statement
+    (39) selection_statement -> IF LPAREN expression . RPAREN statement ELSE statement
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 69
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 66
+
+    (40) iteration_statement -> WHILE LPAREN expression . RPAREN statement
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 70
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 67
+
+    (41) iteration_statement -> FOR LPAREN expression_statement . expression_statement expression RPAREN statement
+    (26) expression_statement -> . expression SEMICOLON
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression_statement           shift and go to state 71
+    expression                     shift and go to state 53
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 68
+
+    (42) return_statement -> RETURN expression SEMICOLON .
+
+    RBRACE          reduce using rule 42 (return_statement -> RETURN expression SEMICOLON .)
+    LBRACE          reduce using rule 42 (return_statement -> RETURN expression SEMICOLON .)
+    IF              reduce using rule 42 (return_statement -> RETURN expression SEMICOLON .)
+    WHILE           reduce using rule 42 (return_statement -> RETURN expression SEMICOLON .)
+    FOR             reduce using rule 42 (return_statement -> RETURN expression SEMICOLON .)
+    RETURN          reduce using rule 42 (return_statement -> RETURN expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 42 (return_statement -> RETURN expression SEMICOLON .)
+    INT_LITERAL     reduce using rule 42 (return_statement -> RETURN expression SEMICOLON .)
+    LPAREN          reduce using rule 42 (return_statement -> RETURN expression SEMICOLON .)
+    ELSE            reduce using rule 42 (return_statement -> RETURN expression SEMICOLON .)
+
+
+state 69
+
+    (38) selection_statement -> IF LPAREN expression RPAREN . statement
+    (39) selection_statement -> IF LPAREN expression RPAREN . statement ELSE statement
+    (21) statement -> . expression_statement
+    (22) statement -> . compound_statement
+    (23) statement -> . selection_statement
+    (24) statement -> . iteration_statement
+    (25) statement -> . return_statement
+    (26) expression_statement -> . expression SEMICOLON
+    (18) compound_statement -> . LBRACE statement_list RBRACE
+    (38) selection_statement -> . IF LPAREN expression RPAREN statement
+    (39) selection_statement -> . IF LPAREN expression RPAREN statement ELSE statement
+    (40) iteration_statement -> . WHILE LPAREN expression RPAREN statement
+    (41) iteration_statement -> . FOR LPAREN expression_statement expression_statement expression RPAREN statement
+    (42) return_statement -> . RETURN expression SEMICOLON
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    LBRACE          shift and go to state 44
+    IF              shift and go to state 54
+    WHILE           shift and go to state 55
+    FOR             shift and go to state 56
+    RETURN          shift and go to state 57
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 53
+    statement                      shift and go to state 72
+    expression_statement           shift and go to state 48
+    compound_statement             shift and go to state 49
+    selection_statement            shift and go to state 50
+    iteration_statement            shift and go to state 51
+    return_statement               shift and go to state 52
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 70
+
+    (40) iteration_statement -> WHILE LPAREN expression RPAREN . statement
+    (21) statement -> . expression_statement
+    (22) statement -> . compound_statement
+    (23) statement -> . selection_statement
+    (24) statement -> . iteration_statement
+    (25) statement -> . return_statement
+    (26) expression_statement -> . expression SEMICOLON
+    (18) compound_statement -> . LBRACE statement_list RBRACE
+    (38) selection_statement -> . IF LPAREN expression RPAREN statement
+    (39) selection_statement -> . IF LPAREN expression RPAREN statement ELSE statement
+    (40) iteration_statement -> . WHILE LPAREN expression RPAREN statement
+    (41) iteration_statement -> . FOR LPAREN expression_statement expression_statement expression RPAREN statement
+    (42) return_statement -> . RETURN expression SEMICOLON
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    LBRACE          shift and go to state 44
+    IF              shift and go to state 54
+    WHILE           shift and go to state 55
+    FOR             shift and go to state 56
+    RETURN          shift and go to state 57
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 53
+    statement                      shift and go to state 73
+    expression_statement           shift and go to state 48
+    compound_statement             shift and go to state 49
+    selection_statement            shift and go to state 50
+    iteration_statement            shift and go to state 51
+    return_statement               shift and go to state 52
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 71
+
+    (41) iteration_statement -> FOR LPAREN expression_statement expression_statement . expression RPAREN statement
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 74
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 72
+
+    (38) selection_statement -> IF LPAREN expression RPAREN statement .
+    (39) selection_statement -> IF LPAREN expression RPAREN statement . ELSE statement
+
+  ! shift/reduce conflict for ELSE resolved as shift
+    RBRACE          reduce using rule 38 (selection_statement -> IF LPAREN expression RPAREN statement .)
+    LBRACE          reduce using rule 38 (selection_statement -> IF LPAREN expression RPAREN statement .)
+    IF              reduce using rule 38 (selection_statement -> IF LPAREN expression RPAREN statement .)
+    WHILE           reduce using rule 38 (selection_statement -> IF LPAREN expression RPAREN statement .)
+    FOR             reduce using rule 38 (selection_statement -> IF LPAREN expression RPAREN statement .)
+    RETURN          reduce using rule 38 (selection_statement -> IF LPAREN expression RPAREN statement .)
+    IDENTIFIER      reduce using rule 38 (selection_statement -> IF LPAREN expression RPAREN statement .)
+    INT_LITERAL     reduce using rule 38 (selection_statement -> IF LPAREN expression RPAREN statement .)
+    LPAREN          reduce using rule 38 (selection_statement -> IF LPAREN expression RPAREN statement .)
+    ELSE            shift and go to state 75
+
+  ! ELSE            [ reduce using rule 38 (selection_statement -> IF LPAREN expression RPAREN statement .) ]
+
+
+state 73
+
+    (40) iteration_statement -> WHILE LPAREN expression RPAREN statement .
+
+    RBRACE          reduce using rule 40 (iteration_statement -> WHILE LPAREN expression RPAREN statement .)
+    LBRACE          reduce using rule 40 (iteration_statement -> WHILE LPAREN expression RPAREN statement .)
+    IF              reduce using rule 40 (iteration_statement -> WHILE LPAREN expression RPAREN statement .)
+    WHILE           reduce using rule 40 (iteration_statement -> WHILE LPAREN expression RPAREN statement .)
+    FOR             reduce using rule 40 (iteration_statement -> WHILE LPAREN expression RPAREN statement .)
+    RETURN          reduce using rule 40 (iteration_statement -> WHILE LPAREN expression RPAREN statement .)
+    IDENTIFIER      reduce using rule 40 (iteration_statement -> WHILE LPAREN expression RPAREN statement .)
+    INT_LITERAL     reduce using rule 40 (iteration_statement -> WHILE LPAREN expression RPAREN statement .)
+    LPAREN          reduce using rule 40 (iteration_statement -> WHILE LPAREN expression RPAREN statement .)
+    ELSE            reduce using rule 40 (iteration_statement -> WHILE LPAREN expression RPAREN statement .)
+
+
+state 74
+
+    (41) iteration_statement -> FOR LPAREN expression_statement expression_statement expression . RPAREN statement
+    (31) binary_expression -> expression . PLUS expression
+    (32) binary_expression -> expression . MINUS expression
+    (33) binary_expression -> expression . TIMES expression
+    (34) binary_expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 76
+    PLUS            shift and go to state 29
+    MINUS           shift and go to state 30
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 75
+
+    (39) selection_statement -> IF LPAREN expression RPAREN statement ELSE . statement
+    (21) statement -> . expression_statement
+    (22) statement -> . compound_statement
+    (23) statement -> . selection_statement
+    (24) statement -> . iteration_statement
+    (25) statement -> . return_statement
+    (26) expression_statement -> . expression SEMICOLON
+    (18) compound_statement -> . LBRACE statement_list RBRACE
+    (38) selection_statement -> . IF LPAREN expression RPAREN statement
+    (39) selection_statement -> . IF LPAREN expression RPAREN statement ELSE statement
+    (40) iteration_statement -> . WHILE LPAREN expression RPAREN statement
+    (41) iteration_statement -> . FOR LPAREN expression_statement expression_statement expression RPAREN statement
+    (42) return_statement -> . RETURN expression SEMICOLON
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    LBRACE          shift and go to state 44
+    IF              shift and go to state 54
+    WHILE           shift and go to state 55
+    FOR             shift and go to state 56
+    RETURN          shift and go to state 57
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression                     shift and go to state 53
+    statement                      shift and go to state 77
+    expression_statement           shift and go to state 48
+    compound_statement             shift and go to state 49
+    selection_statement            shift and go to state 50
+    iteration_statement            shift and go to state 51
+    return_statement               shift and go to state 52
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 76
+
+    (41) iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN . statement
+    (21) statement -> . expression_statement
+    (22) statement -> . compound_statement
+    (23) statement -> . selection_statement
+    (24) statement -> . iteration_statement
+    (25) statement -> . return_statement
+    (26) expression_statement -> . expression SEMICOLON
+    (18) compound_statement -> . LBRACE statement_list RBRACE
+    (38) selection_statement -> . IF LPAREN expression RPAREN statement
+    (39) selection_statement -> . IF LPAREN expression RPAREN statement ELSE statement
+    (40) iteration_statement -> . WHILE LPAREN expression RPAREN statement
+    (41) iteration_statement -> . FOR LPAREN expression_statement expression_statement expression RPAREN statement
+    (42) return_statement -> . RETURN expression SEMICOLON
+    (27) expression -> . assignment_expression
+    (28) expression -> . binary_expression
+    (29) expression -> . term
+    (30) assignment_expression -> . IDENTIFIER ASSIGN expression
+    (31) binary_expression -> . expression PLUS expression
+    (32) binary_expression -> . expression MINUS expression
+    (33) binary_expression -> . expression TIMES expression
+    (34) binary_expression -> . expression DIVIDE expression
+    (35) term -> . IDENTIFIER
+    (36) term -> . INT_LITERAL
+    (37) term -> . LPAREN expression RPAREN
+
+    LBRACE          shift and go to state 44
+    IF              shift and go to state 54
+    WHILE           shift and go to state 55
+    FOR             shift and go to state 56
+    RETURN          shift and go to state 57
+    IDENTIFIER      shift and go to state 16
+    INT_LITERAL     shift and go to state 21
+    LPAREN          shift and go to state 22
+
+    expression_statement           shift and go to state 48
+    expression                     shift and go to state 53
+    statement                      shift and go to state 78
+    compound_statement             shift and go to state 49
+    selection_statement            shift and go to state 50
+    iteration_statement            shift and go to state 51
+    return_statement               shift and go to state 52
+    assignment_expression          shift and go to state 18
+    binary_expression              shift and go to state 19
+    term                           shift and go to state 20
+
+state 77
+
+    (39) selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .
+
+    RBRACE          reduce using rule 39 (selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    LBRACE          reduce using rule 39 (selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    IF              reduce using rule 39 (selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    WHILE           reduce using rule 39 (selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    FOR             reduce using rule 39 (selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    RETURN          reduce using rule 39 (selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    IDENTIFIER      reduce using rule 39 (selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    INT_LITERAL     reduce using rule 39 (selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    LPAREN          reduce using rule 39 (selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+    ELSE            reduce using rule 39 (selection_statement -> IF LPAREN expression RPAREN statement ELSE statement .)
+
+
+state 78
+
+    (41) iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .
+
+    RBRACE          reduce using rule 41 (iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .)
+    LBRACE          reduce using rule 41 (iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .)
+    IF              reduce using rule 41 (iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .)
+    WHILE           reduce using rule 41 (iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .)
+    FOR             reduce using rule 41 (iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .)
+    RETURN          reduce using rule 41 (iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .)
+    IDENTIFIER      reduce using rule 41 (iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .)
+    INT_LITERAL     reduce using rule 41 (iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .)
+    LPAREN          reduce using rule 41 (iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .)
+    ELSE            reduce using rule 41 (iteration_statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 37 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 37 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 37 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 37 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 38 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 38 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 38 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 38 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 39 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 39 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 39 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 39 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 40 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 40 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 40 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 40 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 41 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 41 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 41 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 41 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 72 resolved as shift

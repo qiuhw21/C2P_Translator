@@ -110,15 +110,15 @@ x = 5 + 3;
 '''
 
 # Give the lexer input
-lexer.input(data)
+# lexer.input(data)
 
 # Tokenize
-print("Tokens:")
-while True:
-    tok = lexer.token()
-    if not tok: 
-        break
-    print(tok)
+# print("Tokens:")
+# while True:
+#     tok = lexer.token()
+#     if not tok: 
+#         break
+#     print(tok)
 
 # Parse
 print("\nParsed tree:")
