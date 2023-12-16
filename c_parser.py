@@ -1,6 +1,8 @@
 import ply.yacc as yacc
 from lexer import tokens  # Assuming you have a lexer file named 'lexer.py'
 import json
+import sys
+import argparse
 
 precedence = (
     ('left', 'OR'),                  # Lowest precedence
@@ -37,8 +39,12 @@ def p_declaration(p):
 
 # Variable Declarations
 def p_var_declaration_1(p):
-    'var_declaration : type_specifier IDENTIFIER SEMICOLON'
-    p[0] = ('var_declaration', p[1], p[2])
+    '''var_declaration : type_specifier IDENTIFIER SEMICOLON
+                          | type_specifier TIMES IDENTIFIER SEMICOLON'''
+    if len(p) == 4:
+        p[0] = ('var_declaration', p[1], p[2])
+    else:
+        p[0] = ('var_declaration', p[1], p[2], p[3])
 
 def p_var_declaration_2(p):
     'var_declaration : type_specifier IDENTIFIER ASSIGN expression SEMICOLON'
@@ -187,18 +193,51 @@ parser = yacc.yacc(start='program')
 # Function to parse and return JSON
 def parse_to_json(data):
     result = parser.parse(data)
-    print(result)
+    # print(result)
     return json.dumps(result, indent=4)
 
-# Example usage
-input_data = '''
-int main() {
-    int x;
-    if (x > 5) {
-        return x;
-    }
-    return 0;
-}
-'''
-ast = parse_to_json(input_data)
-print(ast)
+if __name__ == '__main__':
+    # Create the parser
+    arg_parser = argparse.ArgumentParser(description='Parse C code to JSON.')
+    arg_parser.add_argument('-s', '--source', type=str, help='Path to the C source file')
+    arg_parser.add_argument('-o', '--output', type=str, help='Path to the output JSON file')
+    args = arg_parser.parse_args()
+
+    if args.source:
+        try:
+            with open(args.source, 'r') as file:
+                data = file.read()
+        except FileNotFoundError:
+            print(f"Error: File {args.source} not found.")
+            sys.exit(1)
+    else:
+        # No file path provided; use default data
+        data = '''
+        int main() {
+            int x;
+            if (x > 5) {
+                return x;
+            }
+            return 0;
+        }
+        '''
+        # data = '''
+        # int x = 10;
+        # float y = 5.5;
+        # char* str = "Hello";
+        # if (x > 0) {
+        #     x++;
+        # }
+        # '''
+    # print(data)
+    output = parse_to_json(data)
+
+    if args.output:
+        try:
+            with open(args.output, 'w') as file:
+                file.write(output)
+        except FileNotFoundError:
+            print(f"Error: File {args.output} not found.")
+            sys.exit(1)
+    else:
+        print(output)

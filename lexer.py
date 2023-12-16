@@ -1,4 +1,6 @@
 import ply.lex as lex
+import sys
+import argparse
 
 # Dictionary of reserved keywords
 reserved = {
@@ -54,14 +56,14 @@ t_RBRACKET = r'\]'
 t_SEMICOLON = r';'
 t_COMMA = r','
 
+def t_FLOAT_LITERAL(t):
+    r'\d*\.\d*'
+    t.value = float(t.value)
+    return t
+
 def t_INT_LITERAL(t):
     r'\d+'
     t.value = int(t.value)
-    return t
-
-def t_FLOAT_LITERAL(t):
-    r'\d+\.\d*'
-    t.value = float(t.value)
     return t
 
 def t_STRING_LITERAL(t):
@@ -115,32 +117,31 @@ def get_token_stream(data):
         })
     return token_stream
 
-# Test input
 if __name__ == '__main__':
-    # data = '''
-    # int x = 10;
-    # char y = 'a';
-    # bool flag = true;
-    # if (x > 0) {
-    #     x++;
-    # }
-    # '''
+    # Create the parser
+    arg_parser = argparse.ArgumentParser(description='Parse C code to JSON.')
+    arg_parser.add_argument('-s', '--source', type=str, help='Path to the C source file')
 
-    data = '''
-    int x = 10;
-    float y = 5.5;
-    char* str = "Hello";
-    if (x > 0) {
-        x++;
-    }
-    '''
+    args = arg_parser.parse_args()
+
+    if args.source:
+        try:
+            with open(args.source, 'r') as file:
+                data = file.read()
+        except FileNotFoundError:
+            print(f"Error: File {args.source} not found.")
+            sys.exit(1)
+    else:
+        # No file path provided; use default data
+        data = '''
+        int x = 10;
+        float y = 5.5;
+        char* str = "Hello";
+        if (x > 0) {
+            x++;
+        }
+        '''
+
     output = get_token_stream(data)
     for token in output:
         print(token)
-
-    # with open('./tests/sort.c', 'r') as f:
-    #     data = f.read()
-    #     output = get_token_stream(data)
-    #     for token in output:
-    #         print(token)
-
