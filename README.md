@@ -10,24 +10,27 @@ C2P_Translator 是一个旨在将 C 语言代码翻译成 Python 代码的工具
 
 ### 开发进程
 - **第一次提交**: 完成了词法分析器，可以识别 C 语言的关键字、标识符、常量、运算符和界符。
+- **第二次提交**: 完成了语法分析器，可以将 C 语言的代码转化为抽象语法树。
 
 ### 预计支持的语言特性
 
 #### 数据类型
 - 基本类型: `int`, `float`, `char`, `void`
-- 数组（可选，但对于许多问题非常有用）
+- 数组
+- 字符串，以 `char` 数组的形式表示
+- 为了简化实现，暂不支持指针、结构体、联合体等复杂类型
 
 #### 变量和表达式
-- 变量声明和初始化（例如：`int x;`, `int x = 10;`）
+- 变量声明和初始化（例如：`int x;`, `int x = 10;`，注意一次只能声明一个变量）
 - 算术运算（例如：`+`, `-`, `*`, `/`, `%`）
 - 逻辑运算（例如：`&&`, `||`, `!`）
 - 比较运算（例如：`==`, `!=`, `<`, `>`, `<=`, `>=`）
 - 赋值（例如：`=`）
 
 #### 控制结构
-- 条件语句：`if`, `else`
+- 条件语句：`if`, `else`, `else if`
 - 循环：`for`, `while`
-- （可选）循环控制的 `break` 和 `continue`
+- 循环控制的 `break` 和 `continue`
 
 #### 函数
 - 函数声明和定义
@@ -49,32 +52,55 @@ C2P_Translator 是一个旨在将 C 语言代码翻译成 Python 代码的工具
 
 2. **声明**:
    - `declaration_list : declaration_list declaration | declaration`
-   - `declaration : var_declaration | function_declaration`
+   - `declaration : var_declaration | function_declaration | array_declaration`
 
 3. **变量声明**:
    - `var_declaration : type_specifier IDENTIFIER SEMICOLON | type_specifier IDENTIFIER ASSIGN expression SEMICOLON`
+   - `array_declaration : type_specifier IDENTIFIER LBRACKET INT_LITERAL RBRACKET SEMICOLON | type_specifier IDENTIFIER LBRACKET INT_LITERAL RBRACKET ASSIGN LBRACE array_list RBRACE SEMICOLON | type_specifier IDENTIFIER LBRACKET RBRACKET ASSIGN LBRACE array_list RBRACE SEMICOLON`
    - `type_specifier : INT | FLOAT | CHAR | VOID`
+   - `array_list : array_list COMMA expression | expression`
 
 4. **函数声明和定义**:
    - `function_declaration : type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement`
    - `param_list : param_list COMMA param | param | empty`
-   - `param : type_specifier IDENTIFIER`
+   - `param : type_specifier IDENTIFIER | type_specifier IDENTIFIER LBRACKET RBRACKET`
    - `compound_statement : LBRACE statement_list RBRACE`
 
 5. **语句**:
    - `statement_list : statement_list statement | statement`
-   - `statement : expression_statement | compound_statement | selection_statement | iteration_statement | return_statement`
+   - `statement : expression_statement | compound_statement | selection_statement | iteration_statement | return_statement | continue_statement | break_statement | var_declaration | array_declaration | empty`
 
 6. **表达式**:
    - `expression_statement : expression SEMICOLON`
-   - `expression : assignment_expression | binary_expression | term`
-   - `assignment_expression : IDENTIFIER ASSIGN expression`
+   - `expression : assignment_expression | binary_expression | unary_expression | term`
+   - `assignment_expression : IDENTIFIER ASSIGN expression | array_access ASSIGN expression`
    - `binary_expression : expression PLUS expression | expression MINUS expression | ... (其他二元运算)`
-   - `term : IDENTIFIER | NUMBER | LPAREN expression RPAREN`
+   - `unary_expression : MINUS term | PLUS term | ... (其他一元运算)`
+   - `term : IDENTIFIER | INT_LITERAL | FLOAT_LITERAL | STRING_LITERAL | LPAREN expression RPAREN | function_call | array_access`
+   - `function_call : IDENTIFIER LPAREN argument_list RPAREN`
+   - `array_access : IDENTIFIER LBRACKET expression RBRACKET`
+   - `argument_list : argument_list COMMA expression | expression`
 
 7. **控制结构**:
    - `selection_statement : IF LPAREN expression RPAREN statement | IF LPAREN expression RPAREN statement ELSE statement`
    - `iteration_statement : WHILE LPAREN expression RPAREN statement | FOR LPAREN expression_statement expression_statement expression RPAREN statement`
    - `return_statement : RETURN expression SEMICOLON`
+   - `continue_statement : CONTINUE SEMICOLON`
+   - `break_statement : BREAK SEMICOLON`
 
 8. **输入/输出**（根据实现可能作为表达式或语句的一部分处理）
+
+#### 注意事项
+- **数组访问** (`array_access`) 被包含在表达式中，允许数组元素的读写。
+
+## 项目实现
+
+### 词法分析
+
+词法分析使用了 `lex` 工具，将 C 语言的代码转化为 token 流。在`lexer.py`中，定义了词法分析器的规则，包括关键字、标识符、常量、运算符和界符。
+
+### 语法分析
+
+语法分析使用了 `yacc` 工具，将 token 流转化为抽象语法树。在`c_parser.py`中，定义了语法分析器的规则，包括程序结构、声明、变量和表达式、控制结构、函数、输入/输出等。
+
+在实现语法分析时，遇到了一些自己写代码时没有注意到语法细节，例如变量的赋值属于表达式，而变量的声明属于语句，数组访问属于表达式，数组声明属于语句等。这些细节在实现时需要注意。

@@ -13,7 +13,6 @@ reserved = {
     'for': 'FOR',
     'while': 'WHILE',
     'return': 'RETURN',
-    # ... add other reserved keywords here ...
     'break': 'BREAK',
     'continue': 'CONTINUE',
 }

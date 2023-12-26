@@ -1,5 +1,5 @@
 import ply.yacc as yacc
-from lexer import tokens  # Assuming you have a lexer file named 'lexer.py'
+from lexer import tokens  # Import the tokens from lexer.py
 import json
 import sys
 import argparse
@@ -34,7 +34,9 @@ def p_declaration_list_2(p):
 
 def p_declaration(p):
     '''declaration : var_declaration
-                   | function_declaration'''
+                   | function_declaration
+                   | function_definition
+                   | array_declaration'''
     p[0] = p[1]
 
 # Variable Declarations
@@ -50,6 +52,26 @@ def p_var_declaration_2(p):
     'var_declaration : type_specifier IDENTIFIER ASSIGN expression SEMICOLON'
     p[0] = ('var_declaration_init', p[1], p[2], p[4])
 
+def p_array_declaration_1(p):
+    'array_declaration : type_specifier IDENTIFIER LBRACKET expression RBRACKET SEMICOLON'
+    p[0] = ('array_declaration', p[1], p[2], p[4])
+
+def p_array_declaration_2(p):
+    'array_declaration : type_specifier IDENTIFIER LBRACKET expression RBRACKET ASSIGN LBRACE array_list RBRACE SEMICOLON'
+    p[0] = ('array_declaration_init', p[1], p[2], p[4], p[8])
+
+def p_array_declaration_3(p):
+    'array_declaration : type_specifier IDENTIFIER LBRACKET RBRACKET ASSIGN LBRACE array_list RBRACE SEMICOLON'
+    p[0] = ('array_declaration_init', p[1], p[2], p[7])
+
+def p_array_declaration_4(p):
+    'array_declaration : type_specifier IDENTIFIER LBRACKET expression RBRACKET ASSIGN STRING_LITERAL SEMICOLON'
+    p[0] = ('array_declaration_init', p[1], p[2], p[4], p[7])
+
+def p_array_declaration_5(p):
+    'array_declaration : type_specifier IDENTIFIER LBRACKET RBRACKET ASSIGN STRING_LITERAL SEMICOLON'
+    p[0] = ('array_declaration_init', p[1], p[2], p[6])
+
 def p_type_specifier(p):
     '''type_specifier : INT
                       | FLOAT
@@ -57,10 +79,22 @@ def p_type_specifier(p):
                       | VOID'''
     p[0] = p[1]
 
+def p_array_list_1(p):
+    'array_list : array_list COMMA expression'
+    p[0] = p[1] + [p[3]]
+
+def p_array_list_2(p):
+    'array_list : expression'
+    p[0] = [p[1]]
+
 # Function Declarations and Definitions
 def p_function_declaration(p):
-    'function_declaration : type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement'
-    p[0] = ('function_declaration', p[1], p[2], p[4], p[6])
+    'function_declaration : type_specifier IDENTIFIER LPAREN param_list RPAREN SEMICOLON'
+    p[0] = ('function_declaration', p[1], p[2], p[4])
+
+def p_function_definition(p):
+    'function_definition : type_specifier IDENTIFIER LPAREN param_list RPAREN compound_statement'
+    p[0] = ('function_definition', p[1], p[2], p[4], p[6])
 
 def p_param_list_1(p):
     'param_list : param_list COMMA param'
@@ -74,9 +108,17 @@ def p_param_list_empty(p):
     'param_list : empty'
     p[0] = []
 
-def p_param(p):
+def p_param_1(p):
     'param : type_specifier IDENTIFIER'
     p[0] = ('param', p[1], p[2])
+
+def p_param_2(p):
+    'param : type_specifier IDENTIFIER LBRACKET RBRACKET'
+    p[0] = ('param', p[1], p[2], p[3], p[4])
+
+def p_param_3(p):
+    'param : type_specifier TIMES IDENTIFIER'
+    p[0] = ('param', p[1], p[2], p[3])
 
 def p_empty(p):
     'empty :'
@@ -101,7 +143,10 @@ def p_statement(p):
                  | selection_statement
                  | iteration_statement
                  | return_statement
+                 | continue_statement
+                 | break_statement
                  | var_declaration
+                 | array_declaration
                  | empty'''
     p[0] = p[1]
 
@@ -117,8 +162,12 @@ def p_expression(p):
                   | term'''
     p[0] = p[1]
 
-def p_assignment_expression(p):
+def p_assignment_expression_1(p):
     'assignment_expression : IDENTIFIER ASSIGN expression'
+    p[0] = ('assignment_expression', p[1], p[3])
+
+def p_assignment_expression_2(p):
+    'assignment_expression : array_access ASSIGN expression'
     p[0] = ('assignment_expression', p[1], p[3])
 
 def p_binary_expression(p):
@@ -141,19 +190,29 @@ def p_unary_expression(p):
     '''unary_expression : MINUS expression %prec UMINUS
                         | NOT expression
                         | INC IDENTIFIER
-                        | DEC IDENTIFIER'''
+                        | DEC IDENTIFIER
+                        | IDENTIFIER INC
+                        | IDENTIFIER DEC'''
     p[0] = ('unary_expression', p[1], p[2])
 
 def p_term(p):
     '''term : IDENTIFIER
             | INT_LITERAL
+            | FLOAT_LITERAL
+            | CHAR_LITERAL
+            | STRING_LITERAL
             | LPAREN expression RPAREN
-            | function_call'''
+            | function_call
+            | array_access'''
     p[0] = ('term', p[1])
 
 def p_function_call(p):
     'function_call : IDENTIFIER LPAREN argument_list RPAREN'
     p[0] = ('function_call', p[1], p[3])
+
+def p_array_access(p):
+    'array_access : IDENTIFIER LBRACKET expression RBRACKET'
+    p[0] = ('array_access', p[1], p[3])
 
 def p_argument_list(p):
     '''argument_list : argument_list COMMA expression
@@ -167,17 +226,18 @@ def p_argument_list(p):
         p[0] = []
 
 # Control Structures
-def p_selection_statement(p):
-    '''selection_statement : IF LPAREN expression RPAREN compound_statement
-                           | IF LPAREN expression RPAREN compound_statement ELSE compound_statement'''
-    if len(p) == 6:
-        p[0] = ('if_statement', p[3], p[5])
-    else:
-        p[0] = ('if_else_statement', p[3], p[5], p[7])
+def p_selection_statement_1(p):
+    'selection_statement : IF LPAREN expression RPAREN statement'
+    p[0] = ('if_statement', p[3], p[5])
+
+def p_selection_statement_2(p):
+    'selection_statement : IF LPAREN expression RPAREN statement ELSE statement'
+    p[0] = ('if_else_statement', p[3], p[5], p[7])
 
 def p_iteration_statement(p):
     '''iteration_statement : WHILE LPAREN expression RPAREN statement
-                           | FOR LPAREN expression_statement expression_statement expression RPAREN statement'''
+                           | FOR LPAREN expression_statement expression_statement expression RPAREN statement
+                            | FOR LPAREN var_declaration expression_statement expression RPAREN statement'''
     if len(p) == 6:
         p[0] = ('while_statement', p[3], p[5])
     else:
@@ -186,6 +246,14 @@ def p_iteration_statement(p):
 def p_return_statement(p):
     'return_statement : RETURN expression SEMICOLON'
     p[0] = ('return_statement', p[2])
+
+def p_continue_statement(p):
+    'continue_statement : CONTINUE SEMICOLON'
+    p[0] = ('continue_statement', p[1])
+
+def p_break_statement(p):
+    'break_statement : BREAK SEMICOLON'
+    p[0] = ('break_statement', p[1])
 
 # Build the parser
 parser = yacc.yacc(start='program')
