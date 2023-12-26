@@ -1,9 +1,8 @@
-#include <stdio.h>
-#include <string.h>
+// 测试代码：KMP算法
 
-void computeLPSArray(char* pat, int M, int* lps);
+void computeLPSArray(char pat[], int M, int lps[]);
 
-void KMPSearch(char* pat, char* txt) {
+void KMPSearch(char pat[], char txt[]) {
     int M = strlen(pat);
     int N = strlen(txt);
 
@@ -30,7 +29,7 @@ void KMPSearch(char* pat, char* txt) {
     }
 }
 
-void computeLPSArray(char* pat, int M, int* lps) {
+void computeLPSArray(char pat[], int M, int lps[]) {
     int len = 0;
     lps[0] = 0;
 
