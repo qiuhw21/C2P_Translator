@@ -204,7 +204,12 @@ def p_term(p):
             | LPAREN expression RPAREN
             | function_call
             | array_access'''
-    p[0] = ('term', p[1])
+    if len(p) == 2:
+        # 对于单一元素的情况
+        p[0] = ('term', p[1])
+    elif len(p) == 4:
+        # 对于括号内的表达式
+        p[0] = ('paren_expression', p[2])
 
 def p_function_call(p):
     'function_call : IDENTIFIER LPAREN argument_list RPAREN'
