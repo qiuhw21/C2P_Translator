@@ -9,553 +9,149 @@
 ### 运行指南
 1. 确保已安装Python 3.8，并且安装了PLY库。
 2. 在命令行或终端中，切换到项目所在目录。
-3. 运行命令 `python c_parser.py -s <filename> -o <output_filename>`，其中`<filename>`为待解析的C语言源文件，`<output_filename>`为输出的JSON文件名。
-例如，运行命令 `python c_parser.py -s tests/sort.c -o sort.json`，则会将`tests/sort.c`解析得到的AST输出到`sort.json`文件中。
-如果不指定`-s`参数，则默认一段测试代码；如果不指定`-o`参数，则默认输出到标准输出。
+3. 运行命令 `python mian.py -s <filename> -o <output_filename>`，其中`<filename>`为待解析的C语言源文件，`<output_filename>`为输出的python文件名。
+例如，运行命令 `python main.py -s tests/sort.c -o sort.py`，则会将`tests/sort.c`翻译得到的python文件输出到`sort.py`文件中。
 
 ### 运行结果
 
 #### 1. 测试代码
 源代码：
 ```
-int main() {
-    int x;
-    if (x > 5) {
-        return x;
-    }
-    return 0;
-}
-```
-
-运行结果：
-```
-> python c_parser.py               
-[
-    "program",
-    [
-        [
-            "function_definition",
-            "int",
-            "main",
-            [],
-            [
-                "compound_statement",
-                [
-                    [
-                        "var_declaration",
-                        "int",
-                        "x"
-                    ],
-                    [
-                        "if_statement",
-                        [
-                            "binary_expression",
-                            ">",
-                            [
-                                "term",
-                                "x"
-                            ],
-                            [
-                                "term",
-                                5
-                            ]
-                        ],
-                        [
-                            "compound_statement",
-                            [
-                                [
-                                    "return_statement",
-                                    [
-                                        "term",
-                                        "x"
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "return_statement",
-                        [
-                            "term",
-                            0
-                        ]
-                    ]
-                ]
-            ]
-        ]
-    ]
-]```
-
-#### 2. 测试文件
-
-测试文件`tests/sort.c`内容如下：
-```
-// 测试代码：冒泡排序
-void sort(int arr[], int n) {
-    int i;
-    int j;
-    int temp;
-    for (i = 0; i < n - 1; i++) {
-        for (j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
+// 测试代码：计算器
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdlib.h>
+int calculate(char s[])
+{
+    int result = 0;
+    int num = 0;
+    int sign = 1;
+    for (int i = 0; i < strlen(s); i++)
+    {
+        char c = s[i];
+        if (c >= '0' && c <= '9')
+        {
+            int tmp = 0;
+            if (c == '0')
+            {
+                tmp = 0;
             }
+            if (c == '1')
+            {
+                tmp = 1;
+            }
+            if (c == '2')
+            {
+                tmp = 2;
+            }
+            if (c == '3')
+            {
+                tmp = 3;
+            }
+            if (c == '4')
+            {
+                tmp = 4;
+            }
+            if (c == '5')
+            {
+                tmp = 5;
+            }
+            if (c == '6')
+            {
+                tmp = 6;
+            }
+            if (c == '7')
+            {
+                tmp = 7;
+            }
+            if (c == '8')
+            {
+                tmp = 8;
+            }
+            if (c == '9')
+            {
+                tmp = 9;
+            }
+
+            num = 10 * num + tmp;
         }
+        if (c == '+')
+        {
+            result = result + sign * num;
+            num = 0;
+            sign = 1;
+        }
+        if (c == '-')
+        {
+            result = result + sign * num;
+            num = 0;
+            sign = -1;
+        }
+        // Add more conditions for '*', '/' and parentheses if needed
     }
+    result = result + sign * num;
+    return result;
 }
 
-int main() {
-    int arr[5] = {5, 8, 4, 9};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    sort(arr, n);
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
+int main()
+{
+    char expression[] = "1 + 2 - 3";
+    printf("Result: %d\n", calculate(expression));
     return 0;
 }
 ```
 
 运行结果：
 ```
-> python c_parser.py -s tests/sort.c
-[
-    "program",
-    [
-        [
-            "function_definition",
-            "void",
-            "sort",
-            [
-                [
-                    "param",
-                    "int",
-                    "arr",
-                    "[",
-                    "]"
-                ],
-                [
-                    "param",
-                    "int",
-                    "n"
-                ]
-            ],
-            [
-                "compound_statement",
-                [
-                    [
-                        "var_declaration",
-                        "int",
-                        "i"
-                    ],
-                    [
-                        "var_declaration",
-                        "int",
-                        "j"
-                    ],
-                    [
-                        "var_declaration",
-                        "int",
-                        "temp"
-                    ],
-                    [
-                        "for_statement",
-                        [
-                            "expression_statement",
-                            [
-                                "assignment_expression",
-                                "i",
-                                [
-                                    "term",
-                                    0
-                                ]
-                            ]
-                        ],
-                        [
-                            "expression_statement",
-                            [
-                                "binary_expression",
-                                "<",
-                                [
-                                    "term",
-                                    "i"
-                                ],
-                                [
-                                    "binary_expression",
-                                    "-",
-                                    [
-                                        "term",
-                                        "n"
-                                    ],
-                                    [
-                                        "term",
-                                        1
-                                    ]
-                                ]
-                            ]
-                        ],
-                        [
-                            "unary_expression",
-                            "i",
-                            "++"
-                        ],
-                        [
-                            "compound_statement",
-                            [
-                                [
-                                    "for_statement",
-                                    [
-                                        "expression_statement",
-                                        [
-                                            "assignment_expression",
-                                            "j",
-                                            [
-                                                "term",
-                                                0
-                                            ]
-                                        ]
-                                    ],
-                                    [
-                                        "expression_statement",
-                                        [
-                                            "binary_expression",
-                                            "<",
-                                            [
-                                                "term",
-                                                "j"
-                                            ],
-                                            [
-                                                "binary_expression",
-                                                "-",
-                                                [
-                                                    "binary_expression",
-                                                    "-",
-                                                    [
-                                                        "term",
-                                                        "n"
-                                                    ],
-                                                    [
-                                                        "term",
-                                                        "i"
-                                                    ]
-                                                ],
-                                                [
-                                                    "term",
-                                                    1
-                                                ]
-                                            ]
-                                        ]
-                                    ],
-                                    [
-                                        "unary_expression",
-                                        "j",
-                                        "++"
-                                    ],
-                                    [
-                                        "compound_statement",
-                                        [
-                                            [
-                                                "if_statement",
-                                                [
-                                                    "binary_expression",
-                                                    ">",
-                                                    [
-                                                        "term",
-                                                        [
-                                                            "array_access",
-                                                            "arr",
-                                                            [
-                                                                "term",
-                                                                "j"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    [
-                                                        "term",
-                                                        [
-                                                            "array_access",
-                                                            "arr",
-                                                            [
-                                                                "binary_expression",
-                                                                "+",
-                                                                [
-                                                                    "term",
-                                                                    "j"
-                                                                ],
-                                                                [
-                                                                    "term",
-                                                                    1
-                                                                ]
-                                                            ]
-                                                        ]
-                                                    ]
-                                                ],
-                                                [
-                                                    "compound_statement",
-                                                    [
-                                                        [
-                                                            "expression_statement",
-                                                            [
-                                                                "assignment_expression",
-                                                                "temp",
-                                                                [
-                                                                    "term",
-                                                                    [
-                                                                        "array_access",
-                                                                        "arr",
-                                                                        [
-                                                                            "term",
-                                                                            "j"
-                                                                        ]
-                                                                    ]
-                                                                ]
-                                                            ]
-                                                        ],
-                                                        [
-                                                            "expression_statement",
-                                                            [
-                                                                "assignment_expression",
-                                                                [
-                                                                    "array_access",
-                                                                    "arr",
-                                                                    [
-                                                                        "term",
-                                                                        "j"
-                                                                    ]
-                                                                ],
-                                                                [
-                                                                    "term",
-                                                                    [
-                                                                        "array_access",
-                                                                        "arr",
-                                                                        [
-                                                                            "binary_expression",
-                                                                            "+",
-                                                                            [
-                                                                                "term",
-                                                                                "j"
-                                                                            ],
-                                                                            [
-                                                                                "term",
-                                                                                1
-                                                                            ]
-                                                                        ]
-                                                                    ]
-                                                                ]
-                                                            ]
-                                                        ],
-                                                        [
-                                                            "expression_statement",
-                                                            [
-                                                                "assignment_expression",
-                                                                [
-                                                                    "array_access",
-                                                                    "arr",
-                                                                    [
-                                                                        "binary_expression",
-                                                                        "+",
-                                                                        [
-                                                                            "term",
-                                                                            "j"
-                                                                        ],
-                                                                        [
-                                                                            "term",
-                                                                            1
-                                                                        ]
-                                                                    ]
-                                                                ],
-                                                                [
-                                                                    "term",
-                                                                    "temp"
-                                                                ]
-                                                            ]
-                                                        ]
-                                                    ]
-                                                ]
-                                            ]
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ],
-        [
-            "function_definition",
-            "int",
-            "main",
-            [],
-            [
-                "compound_statement",
-                [
-                    [
-                        "array_declaration_init",
-                        "int",
-                        "arr",
-                        [
-                            "term",
-                            5
-                        ],
-                        [
-                            [
-                                "term",
-                                5
-                            ],
-                            [
-                                "term",
-                                8
-                            ],
-                            [
-                                "term",
-                                4
-                            ],
-                            [
-                                "term",
-                                9
-                            ]
-                        ]
-                    ],
-                    [
-                        "var_declaration_init",
-                        "int",
-                        "n",
-                        [
-                            "binary_expression",
-                            "/",
-                            [
-                                "term",
-                                [
-                                    "function_call",
-                                    "sizeof",
-                                    [
-                                        [
-                                            "term",
-                                            "arr"
-                                        ]
-                                    ]
-                                ]
-                            ],
-                            [
-                                "term",
-                                [
-                                    "function_call",
-                                    "sizeof",
-                                    [
-                                        [
-                                            "term",
-                                            [
-                                                "array_access",
-                                                "arr",
-                                                [
-                                                    "term",
-                                                    0
-                                                ]
-                                            ]
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "expression_statement",
-                        [
-                            "term",
-                            [
-                                "function_call",
-                                "sort",
-                                [
-                                    [
-                                        "term",
-                                        "arr"
-                                    ],
-                                    [
-                                        "term",
-                                        "n"
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "for_statement",
-                        [
-                            "var_declaration_init",
-                            "int",
-                            "i",
-                            [
-                                "term",
-                                0
-                            ]
-                        ],
-                        [
-                            "expression_statement",
-                            [
-                                "binary_expression",
-                                "<",
-                                [
-                                    "term",
-                                    "i"
-                                ],
-                                [
-                                    "term",
-                                    "n"
-                                ]
-                            ]
-                        ],
-                        [
-                            "unary_expression",
-                            "i",
-                            "++"
-                        ],
-                        [
-                            "compound_statement",
-                            [
-                                [
-                                    "expression_statement",
-                                    [
-                                        "term",
-                                        [
-                                            "function_call",
-                                            "printf",
-                                            [
-                                                [
-                                                    "term",
-                                                    "\"%d \""
-                                                ],
-                                                [
-                                                    "term",
-                                                    [
-                                                        "array_access",
-                                                        "arr",
-                                                        [
-                                                            "term",
-                                                            "i"
-                                                        ]
-                                                    ]
-                                                ]
-                                            ]
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ],
-                    [
-                        "return_statement",
-                        [
-                            "term",
-                            0
-                        ]
-                    ]
-                ]
-            ]
-        ]
-    ]
-]
-```
+> python main.py               
+def calculate(s):
+	result = 0
+	num = 0
+	sign = 1
+	i = 0
+	while i < len(s):
+		c = s[i]
+		if c >= '0' and c <= '9':
+			tmp = 0
+			if c == '0':
+				tmp = 0
+			if c == '1':
+				tmp = 1
+			if c == '2':
+				tmp = 2
+			if c == '3':
+				tmp = 3
+			if c == '4':
+				tmp = 4
+			if c == '5':
+				tmp = 5
+			if c == '6':
+				tmp = 6
+			if c == '7':
+				tmp = 7
+			if c == '8':
+				tmp = 8
+			if c == '9':
+				tmp = 9
+			num = 10 * num + tmp
+		if c == '+':
+			result = result + sign * num
+			num = 0
+			sign = 1
+		if c == '-':
+			result = result + sign * num
+			num = 0
+			sign = - 1
+		i += 1
+	result = result + sign * num
+	return result
+def main():
+	expression = "1 + 2 - 3"
+	print("Result: %d\n", calculate(expression))
+	return 0
+if __name__ == '__main__':
+	main()
 
-类似地，tests文件夹下提供的其他测试文件均可正确解析得到AST。
+```
